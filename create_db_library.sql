@@ -1,0 +1,40 @@
+create database db_library
+go
+use db_library
+go
+CREATE TABLE Authors (
+	AuthorID INT NOT NULL PRIMARY KEY,
+	Name VARCHAR(50) NOT NULL);
+
+CREATE TABLE Genres (
+	GenreID INT NOT NULL PRIMARY KEY,
+	Name VARCHAR(50) NOT NULL);
+
+CREATE TABLE Students (
+	StudentID INT NOT NULL PRIMARY KEY,
+	Name VARCHAR(50) NOT NULL,
+	Birthdate DATE NOT NULL,
+	Class VARCHAR(50) NOT NULL);
+	
+CREATE TABLE Books (
+	BookID INT NOT NULL PRIMARY KEY,
+	Title VARCHAR(200) NOT NULL,
+	NoPages INT NOT NULL,
+	AuthorID INT NOT NULL,
+	GenreID INT NOT NULL,
+	CONSTRAINT  FK_Author FOREIGN KEY (AuthorID)
+				 REFERENCES Authors(AuthorID),
+	CONSTRAINT  FK_Genre FOREIGN KEY (GenreID)
+				 REFERENCES Genres(GenreID));
+
+CREATE TABLE Borrows (
+	BorrowID INT NOT NULL PRIMARY KEY,
+	StudentID INT NOT NULL,
+	BookID INT NOT NULL,
+	BorrowDate DATE NOT NULL,
+	DueDate DATE NOT NULL,
+	ReturnDate DATE,
+	CONSTRAINT FK_Student FOREIGN KEY (StudentID)
+				REFERENCES Students(StudentID),
+	CONSTRAINT FK_Book FOREIGN KEY (BookID)
+				REFERENCES Books(BookID));
